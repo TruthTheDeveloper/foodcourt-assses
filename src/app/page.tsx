@@ -5,6 +5,7 @@ import { Modal } from "../components/Modal";
 import { SettingsButton, SettingsButtonContainer, Container } from "../styles";
 import { isFormValid } from "../utils";
 
+
 const App: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -29,6 +30,8 @@ const App: React.FC = () => {
     minLength: 0,
   });
 
+
+
   useEffect(() => {
     const savedSettings = localStorage.getItem("passwordSettings");
     const savedModalSettingsChanged = localStorage.getItem(
@@ -37,8 +40,14 @@ const App: React.FC = () => {
 
     if (savedSettings) {
       setPasswordSettings(JSON.parse(savedSettings));
+
+      
+        setShowModal(false);
+      
     } else {
       // If there are no saved settings, use the default settings
+      setShowModal(true);
+
       setPasswordSettings({
         uppercase: false,
         lowercase: false,
@@ -48,11 +57,6 @@ const App: React.FC = () => {
       });
     }
 
-    if (savedModalSettingsChanged === "true") {
-      setModalSettingsChanged(true);
-    } else {
-      setShowModal(true);
-    }
 
     setTimeout(() => {
       setLoading(false);
@@ -66,21 +70,6 @@ const App: React.FC = () => {
         !modalRef.current.contains(event.target as Node)
       ) {
         setShowModal(false);
-        setPasswordSettings({
-          uppercase: passwordSettings.uppercase,
-          lowercase: passwordSettings.lowercase,
-          number: passwordSettings.number,
-          specialChar: passwordSettings.specialChar,
-          minLength: passwordSettings.minLength,
-        });
-
-        setTempPasswordSettings({
-          uppercase: tempPasswordSettings.uppercase,
-          lowercase: tempPasswordSettings.lowercase,
-          number: tempPasswordSettings.number,
-          specialChar: tempPasswordSettings.specialChar,
-          minLength: tempPasswordSettings.minLength,
-        });
       }
     },
     [setShowModal]
