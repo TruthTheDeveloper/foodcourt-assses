@@ -41,7 +41,7 @@ interface ModalProps {
   onClose: () => void;
 }
 
-const Modal = forwardRef<HTMLDivElement, ModalProps>(
+const ModalComponent = forwardRef<HTMLDivElement, ModalProps>(
   (
     {
       passwordSettings,
@@ -72,4 +72,6 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(
   }
 );
 
+const Modal = React.memo(ModalComponent);
+Modal.displayName = 'Modal';
 export default Modal;
